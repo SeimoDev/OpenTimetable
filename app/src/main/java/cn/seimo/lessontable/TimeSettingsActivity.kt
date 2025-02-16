@@ -4,16 +4,23 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.ContentValues
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.util.TypedValue
 import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import com.google.android.material.button.MaterialButton
 import cn.seimo.lessontable.db.DBHelper
+import cn.seimo.lessontable.R  // 新增：导入项目资源类
 import java.util.Calendar
 
 class TimeSettingsActivity : AppCompatActivity() {
@@ -22,6 +29,27 @@ class TimeSettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_time_settings)
+        
+        // 设置沉浸式状态栏
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // 设置状态栏透明
+            window.statusBarColor = Color.TRANSPARENT
+            
+            // 设置布局延伸到状态栏
+            window.decorView.systemUiVisibility = (
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            )
+
+            // 获取主题色并设置状态栏
+            val toolbar = findViewById<Toolbar>(R.id.toolbar)
+            toolbar?.setOnApplyWindowInsetsListener { _, insets ->
+                toolbar.setPadding(0, insets.systemWindowInsetTop, 0, 0)
+                insets
+            }
+        }
+        
         dbHelper = DBHelper(this)
 
         // 获取最大课程数和现有数据
@@ -29,7 +57,7 @@ class TimeSettingsActivity : AppCompatActivity() {
         val existingSettings = dbHelper.getTimeSettings()
 
         // 设置学期开始时间
-        existingSettings.firstOrNull()?.firstWeekDate?.let { date ->
+        existingSettings.firstOrNull()?.firstWeekDate?.let { date -> 
             findViewById<EditText>(R.id.et_semester_start_date).setText(date)
         }
 
