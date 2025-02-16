@@ -22,9 +22,15 @@ class MainActivity : AppCompatActivity() {
 
         dbHelper = DBHelper(this)
 
-        // 检查是否存在课程数据或学期开始日期为空，若满足任一条件则启动导入流程和时间设置
-        if (!isDataImported() || isSemesterStartDateEmpty()) {
+        // 优先判断数据状态
+        if (!isDataImported()) {
             startActivity(Intent(this, ImportActivity::class.java))
+            finish()
+            return
+        } else if (isSemesterStartDateEmpty()) {
+            startActivity(Intent(this, TimeSettingsActivity::class.java))
+            finish()
+            return
         }
 
         // 修改右下角悬浮按钮为设置按钮，跳转到 TimeSettingsActivity
@@ -71,14 +77,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // 新增方法：检测学期开始日期是否为空
+    // 修改方法：检测 time_settings 表中任意一行 first_week_data 不为空
     private fun isSemesterStartDateEmpty(): Boolean {
         try {
             val db = dbHelper.readableDatabase
-            db.rawQuery("SELECT start_date FROM ${DBHelper.TABLE_TIME_SETTINGS} LIMIT 1", null).use { cursor ->
-                if (cursor.moveToFirst()) {
-                    val startDate = cursor.getString(0)
-                    return startDate.isNullOrEmpty()
+            db.rawQuery("SELECT first_week_date FROM ${DBHelper.TABLE_TIME_SETTINGS}", null).use { cursor ->
+                while (cursor.moveToNext()) {
+                    val firstWeekData = cursor.getString(0)
+                    if (!firstWeekData.isNullOrEmpty()) {
+                        return false
+                    }
                 }
             }
         } catch (e: Exception) {

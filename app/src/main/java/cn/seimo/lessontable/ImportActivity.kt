@@ -13,9 +13,13 @@ import androidx.appcompat.app.AppCompatActivity
 import cn.seimo.lessontable.db.DBHelper
 import cn.seimo.lessontable.model.Course
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.color.DynamicColors  // 新增此行
 import org.json.JSONArray   // 添加 JSONArray 导入
 import org.json.JSONObject
 import java.io.InputStream
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class ImportActivity : AppCompatActivity() {
 
@@ -27,6 +31,8 @@ class ImportActivity : AppCompatActivity() {
     private lateinit var jsonPickerLauncher: ActivityResultLauncher<Array<String>>
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // 申请动态颜色（仅适用于 API 31+ 设备）
+        DynamicColors.applyToActivitiesIfAvailable(application)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_import) // 确保布局文件正确加载
 
@@ -88,6 +94,18 @@ class ImportActivity : AppCompatActivity() {
 
             // 保存课程数据
             saveCourses(courses)
+
+            // 在成功导入课程数据后，插入默认的时间设置
+            dbHelper.insertDefaultTimeSettings()
+            
+            // 设置默认的学期开始日期（比如当前日期）
+            val calendar = Calendar.getInstance()
+            val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.time)
+            val db = dbHelper.writableDatabase
+            val values = ContentValues().apply {
+                put("start_date", currentDate)
+            }
+            db.insert(DBHelper.TABLE_TIME_SETTINGS, null, values)
 
             // 启动时间设置活动，传递最大课程数
             val intent = Intent(this, TimeSettingsActivity::class.java).apply {

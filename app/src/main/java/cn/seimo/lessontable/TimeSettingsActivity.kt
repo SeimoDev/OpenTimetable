@@ -50,22 +50,6 @@ class TimeSettingsActivity : AppCompatActivity() {
             container.addView(timeRow)
         }
 
-        // 为上课和下课时间 EditText 设置点击事件显示 TimePickerDialog
-        val etStartTime = findViewById<EditText>(R.id.et_start_time)
-        val etEndTime = findViewById<EditText>(R.id.et_end_time)
-        etStartTime.setOnClickListener {
-            val calendar = Calendar.getInstance()
-            TimePickerDialog(this, { _, hour, minute ->
-                etStartTime.setText(String.format("%02d:%02d", hour, minute))
-            }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true).show()
-        }
-        etEndTime.setOnClickListener {
-            val calendar = Calendar.getInstance()
-            TimePickerDialog(this, { _, hour, minute ->
-                etEndTime.setText(String.format("%02d:%02d", hour, minute))
-            }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true).show()
-        }
-
         // 为学期起始日期 EditText 设置点击事件显示 DatePickerDialog
         val etSemesterStartDate = findViewById<EditText>(R.id.et_semester_start_date)
         etSemesterStartDate.setOnClickListener {
@@ -86,25 +70,56 @@ class TimeSettingsActivity : AppCompatActivity() {
     }
 
     private fun setupTimePickers(timeRow: View) {
-        timeRow.findViewById<EditText>(R.id.et_start_time).setOnClickListener {
-            showTimePicker(it as EditText)
+        val startTimeEdit = timeRow.findViewById<EditText>(R.id.et_start_time)
+        val endTimeEdit = timeRow.findViewById<EditText>(R.id.et_end_time)
+        
+        startTimeEdit.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            TimePickerDialog(
+                this,
+                { _, hour, minute ->
+                    startTimeEdit.setText(String.format("%02d:%02d", hour, minute))
+                    // 计算并设置下课时间
+                    val endTime = calculateEndTime(hour, minute)
+                    endTimeEdit.setText(String.format("%02d:%02d", endTime.first, endTime.second))
+                },
+                calendar.get(Calendar.HOUR_OF_DAY),
+                calendar.get(Calendar.MINUTE),
+                true
+            ).show()
         }
-        timeRow.findViewById<EditText>(R.id.et_end_time).setOnClickListener {
-            showTimePicker(it as EditText)
+        
+        endTimeEdit.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            TimePickerDialog(
+                this,
+                { _, hour, minute ->
+                    endTimeEdit.setText(String.format("%02d:%02d", hour, minute))
+                },
+                calendar.get(Calendar.HOUR_OF_DAY),
+                calendar.get(Calendar.MINUTE),
+                true
+            ).show()
         }
     }
 
-    private fun showTimePicker(editText: EditText) {
-        val calendar = Calendar.getInstance()
-        TimePickerDialog(
-            this,
-            { _, hour, minute ->
-                editText.setText(String.format("%02d:%02d", hour, minute))
-            },
-            calendar.get(Calendar.HOUR_OF_DAY),
-            calendar.get(Calendar.MINUTE),
-            true
-        ).show()
+    // 新增：计算下课时间的方法
+    private fun calculateEndTime(startHour: Int, startMinute: Int): Pair<Int, Int> {
+        var endHour = startHour
+        var endMinute = startMinute + 110 // 加上110分钟
+
+        // 处理分钟进位
+        if (endMinute >= 60) {
+            endHour += endMinute / 60
+            endMinute %= 60
+        }
+
+        // 处理小时进位（超过24小时）
+        if (endHour >= 24) {
+            endHour %= 24
+        }
+
+        return Pair(endHour, endMinute)
     }
 
     private fun validateInputs(): Boolean {

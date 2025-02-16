@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import java.text.SimpleDateFormat
 import java.util.*
+import android.content.ContentValues
 
 class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
@@ -112,6 +113,44 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         } catch (e: Exception) {
             e.printStackTrace()
             null
+        }
+    }
+
+    // 添加插入默认时间设置的方法
+    fun insertDefaultTimeSettings() {
+        val db = writableDatabase
+        // 默认的课程时间设置
+        val defaultTimes = arrayOf(
+            arrayOf("08:00", "08:45"),
+            arrayOf("08:55", "09:40"),
+            arrayOf("10:00", "10:45"),
+            arrayOf("10:55", "11:40"),
+            arrayOf("14:00", "14:45"),
+            arrayOf("14:55", "15:40"),
+            arrayOf("16:00", "16:45"),
+            arrayOf("16:55", "17:40"),
+            arrayOf("19:00", "19:45"),
+            arrayOf("19:55", "20:40")
+        )
+
+        db.beginTransaction()
+        try {
+            // 先清空现有数据
+            db.delete(TABLE_TIME_SETTINGS, null, null)
+            
+            // 插入默认时间设置
+            for (i in defaultTimes.indices) {
+                val values = ContentValues().apply {
+                    put("period", i + 1)
+                    put("start_time", defaultTimes[i][0])
+                    put("end_time", defaultTimes[i][1])
+                }
+                db.insert(TABLE_TIME_SETTINGS, null, values)
+            }
+            
+            db.setTransactionSuccessful()
+        } finally {
+            db.endTransaction()
         }
     }
 
