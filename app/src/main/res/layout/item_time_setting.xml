@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/tv_period_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:minWidth="80dp"/>
+
+    <EditText
+        android:id="@+id/et_start_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:focusable="false"
+        android:hint="开始时间"
+        android:layout_marginStart="8dp"/>
+
+    <EditText
+        android:id="@+id/et_end_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:focusable="false"
+        android:hint="结束时间"
+        android:layout_marginStart="8dp"/>
+</LinearLayout>

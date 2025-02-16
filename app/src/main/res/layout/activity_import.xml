@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <!-- 提示信息 -->
+    <TextView
+        android:id="@+id/tv_import_hint"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="请选择 JSON 文件导入课程信息并设置上课时间"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- 选择文件按钮 -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_select_json"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="选择 JSON 文件"
+        app:layout_constraintTop_toBottomOf="@id/tv_import_hint"
+        app:layout_constraintStart_toStartOf="parent" />
+    
+    <!-- 其他配置组件（如课程时间、第一周起始日期的输入） -->
+    <!-- ...existing code... -->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

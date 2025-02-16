@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    
+    <!-- Material Design 2 colors -->
+    <color name="md_theme_primary">#6200EE</color>
+    <color name="md_theme_primary_dark">#3700B3</color>
+    <color name="md_theme_secondary">#03DAC6</color>
+    <color name="md_theme_secondary_dark">#018786</color>
+    <color name="md_theme_background">#FFFFFF</color>
+    <color name="md_theme_surface">#FFFFFF</color>
+    <color name="md_theme_error">#B00020</color>
+
+    <!-- 主题颜色 -->
+    <color name="primary">#2196F3</color>
+    <color name="primary_dark">#1976D2</color>
+    <color name="accent">#FF4081</color>
+
+    <!-- 背景颜色 -->
+    <color name="background">#FFFFFF</color>
+    <color name="background_secondary">#F5F5F5</color>
+
+    <!-- 文字颜色 -->
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
+    <color name="text_hint">#BDBDBD</color>
+    <color name="text_on_primary">#FFFFFF</color>
+    <color name="text_on_secondary">#EEEEEE</color>
+
+    <!-- 分割线颜色 -->
+    <color name="divider_light">#E0E0E0</color>
+    <color name="divider_dark">#BDBDBD</color>
+
+    <!-- 课程卡片颜色 -->
+    <color name="course_card_1">#FF7043</color>  <!-- 橙色 -->
+    <color name="course_card_2">#42A5F5</color>  <!-- 蓝色 -->
+    <color name="course_card_3">#66BB6A</color>  <!-- 绿色 -->
+    <color name="course_card_4">#EC407A</color>  <!-- 粉色 -->
+    <color name="course_card_5">#AB47BC</color>  <!-- 紫色 -->
+</resources>
