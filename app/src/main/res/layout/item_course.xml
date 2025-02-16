@@ -9,6 +9,7 @@
     app:cardElevation="1dp"
     app:cardPreventCornerOverlap="false"
     app:cardUseCompatPadding="true"
+    app:cardBackgroundColor="?attr/colorSurface"
     android:foreground="?attr/selectableItemBackground">
 
     <LinearLayout

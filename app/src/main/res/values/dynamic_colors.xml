@@ -1,0 +1,6 @@
+<resources>
+    <color name="dynamic_neutral1">#6200EE</color>
+    <color name="dynamic_neutral2">#FFFFFF</color>
+    <color name="dynamic_accent1">#03DAC6</color>
+    <color name="dynamic_accent2">#000000</color>
+</resources>

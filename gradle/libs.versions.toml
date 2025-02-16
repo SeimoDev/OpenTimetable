@@ -15,6 +15,7 @@ permissionx = "1.7.0"
 permissionxVersion = "1.8.1"
 roomCompiler = "2.7.0-beta01"
 viewpager2 = "1.1.0"
+googleMaterial = "1.13.0-alpha10"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -31,6 +32,7 @@ permissionx = { module = "com.permissionx.guolindev:permissionx", version.ref = 
 guolindev-permissionx = { group = "com.guolindev.permissionx", name = "permissionx", version.ref = "permissionxVersion" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomCompiler" }
 androidx-viewpager2 = { group = "androidx.viewpager2", name = "viewpager2", version.ref = "viewpager2" }
+google-material = { group = "com.google.android.material", name = "material", version.ref = "googleMaterial" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

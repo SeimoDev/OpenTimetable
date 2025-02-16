@@ -1,19 +1,28 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.Seimo课程表" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <!-- 统一使用单一主题定义 -->
+    <style name="Theme.SeimoLessonTable" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Material You 配置 -->
+        <item name="android:forceDarkAllowed">true</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        
+        <!-- 确保 AppCompat 兼容性 -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        
+        <!-- Material 3 Toolbar 配置 -->
+        <item name="toolbarStyle">@style/Widget.Material3.Toolbar</item>
+        <item name="appBarLayoutStyle">@style/Widget.Material3.AppBarLayout</item>
     </style>
-
-    <style name="Theme.Seimo课程表" parent="Base.Theme.Seimo课程表" />
     
-    <style name="Theme.SeimoLessonTable" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/md_theme_primary</item>
-        <item name="colorPrimaryVariant">@color/md_theme_primary_dark</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="colorSecondary">@color/md_theme_secondary</item>
-        <item name="colorSecondaryVariant">@color/md_theme_secondary_dark</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+    <style name="Theme.MyApp" parent="Theme.Material3.DayNight">
+        <!-- 启用动态取色 -->
+        <item name="android:forceDarkAllowed">true</item>
+        <!-- 使用动态取色资源 -->
+        <item name="colorPrimary">@color/dynamic_neutral1</item>
+        <item name="colorOnPrimary">@color/dynamic_neutral2</item>
+        <item name="colorSecondary">@color/dynamic_accent1</item>
+        <item name="colorOnSecondary">@color/dynamic_accent2</item>
+        <!-- ...其他主题配置... -->
     </style>
 </resources>

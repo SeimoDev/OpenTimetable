@@ -57,6 +57,7 @@ dependencies {
     implementation(libs.material.v1110)
     implementation(libs.guolindev.permissionx)
     implementation(libs.androidx.viewpager2)
+    implementation(libs.google.material)
 
     // Room
     val roomVersion = "2.6.0"

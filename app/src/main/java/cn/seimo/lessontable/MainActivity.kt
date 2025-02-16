@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import cn.seimo.lessontable.databinding.ActivityMainBinding
 import cn.seimo.lessontable.db.DBHelper
+import com.google.android.material.color.DynamicColors // 新增导入
 
 class MainActivity : AppCompatActivity() {
 
@@ -13,14 +14,16 @@ class MainActivity : AppCompatActivity() {
     private lateinit var dbHelper: DBHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // 申请动态颜色（仅适用于 API 31+ 设备）
+        DynamicColors.applyToActivitiesIfAvailable(application)
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         dbHelper = DBHelper(this)
 
-        // 检查是否存在课程数据，若无数据则启动导入流程
-        if (!isDataImported()) {
+        // 检查是否存在课程数据或学期开始日期为空，若满足任一条件则启动导入流程和时间设置
+        if (!isDataImported() || isSemesterStartDateEmpty()) {
             startActivity(Intent(this, ImportActivity::class.java))
         }
 
@@ -66,6 +69,22 @@ class MainActivity : AppCompatActivity() {
             e.printStackTrace()
             return false
         }
+    }
+
+    // 新增方法：检测学期开始日期是否为空
+    private fun isSemesterStartDateEmpty(): Boolean {
+        try {
+            val db = dbHelper.readableDatabase
+            db.rawQuery("SELECT start_date FROM ${DBHelper.TABLE_TIME_SETTINGS} LIMIT 1", null).use { cursor ->
+                if (cursor.moveToFirst()) {
+                    val startDate = cursor.getString(0)
+                    return startDate.isNullOrEmpty()
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return true
     }
 
     override fun onSupportNavigateUp(): Boolean {
